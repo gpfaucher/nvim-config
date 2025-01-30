@@ -1,7 +1,7 @@
 return {
   'saghen/blink.cmp',
-  dependencies = 'rafamadriz/friendly-snippets',
   version = '*',
+  dependencies = 'rafamadriz/friendly-snippets',
 
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
@@ -26,15 +26,23 @@ return {
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
       default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
-       providers = {
-          lazydev = {
-            name = "LazyDev",
-            module = "lazydev.integrations.blink",
-            -- make lazydev completions top priority (see `:h blink.cmp`)
-            score_offset = 100,
-          },
+      providers = {
+        lazydev = {
+          name = "LazyDev",
+          module = "lazydev.integrations.blink",
+          -- make lazydev completions top priority (see `:h blink.cmp`)
+          score_offset = 100,
         },
+      },
     },
+
+    completion = {
+      -- Show documentation when selecting a completion item
+      documentation = { auto_show = true, auto_show_delay_ms = 500 },
+
+      -- Display a preview of the selected item on the current line
+      ghost_text = { enabled = true },
+    }
   },
   opts_extend = { "sources.default" }
 }
