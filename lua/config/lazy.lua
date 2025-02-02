@@ -38,6 +38,19 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.opt.showmode = false
+vim.g.clipboard = {
+  name = "WslClipboard",
+  copy = {
+    ["+"] = "clip.exe",
+    ["*"] = "clip.exe",
+  },
+  paste = {
+    ["+"] = "powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring():gsub('\r', ''))",
+    ["*"] = "powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring():gsub('\r', ''))",
+  },
+  cache_enabled = 0,
+}
+
 
 -- Setup lazy.nvim
 require("lazy").setup({

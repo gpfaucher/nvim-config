@@ -51,6 +51,7 @@ return {
       lspconfig.jsonls.setup {}
       lspconfig.marksman.setup {}
       lspconfig.bashls.setup {}
+      lspconfig.csharp_ls.setup {}
     end
   },
   {
