@@ -6,15 +6,29 @@ return {
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
-    -- 'default' for mappings similar to built-in completion
-    -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-    -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-    -- See the full "keymap" documentation for information on defining your own keymap.
     keymap = {
       preset = 'enter',
 
-      ['<Tab>'] = { 'select_next' },
-      ['<S-Tab>'] = { 'select_prev' }
+      ['<Tab>'] = {
+        function(cmp)
+          if cmp.snippet_active() then
+            return cmp.snippet_forward()
+          else
+            return cmp.select_next()
+          end
+        end,
+        'fallback'
+      },
+      ['<S-Tab>'] = {
+        function(cmp)
+          if cmp.snippet_active() then
+            return cmp.snippet_backward()
+          else
+            return cmp.select_prev()
+          end
+        end,
+        'select_prev'
+      },
     },
 
     appearance = {

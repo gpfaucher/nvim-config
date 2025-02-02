@@ -32,10 +32,9 @@ return {
       }
 
       local bicep_lsp_bin = "/usr/local/bin/bicep-langserver/Bicep.LangServer.dll"
-      require 'lspconfig'.bicep.setup {
+      lspconfig.bicep.setup {
         cmd = { "dotnet", bicep_lsp_bin }
       }
-
 
       require('lspconfig').yamlls.setup {
         settings = {
@@ -47,9 +46,11 @@ return {
         }
       }
 
-      lspconfig.lua_ls.setup({})
+      lspconfig.lua_ls.setup {}
       lspconfig.ts_ls.setup {}
-      require 'lspconfig'.jsonls.setup {}
+      lspconfig.jsonls.setup {}
+      lspconfig.marksman.setup {}
+      lspconfig.bashls.setup {}
     end
   },
   {
