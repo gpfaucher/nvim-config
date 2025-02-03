@@ -6,9 +6,10 @@
 - [ ] Setup markdown-oxide with Obsidian support
 - [ ] Setup bootstrap.sh script for arch linux / wsl
 - [ ] Setup a separate bootstrap script for all lsp servers, formatters etc.
+- [ ] Migrate whole configuration to Windows
+- [ ] Implement Mason / automatic server install and setup
 - [ ] Setup windows terminal profiles to run apps from windows with nvim dev in wsl for each project
 - [ ] Setup a plugin like easymotion to easily use f, t etc jumps
-- [ ] Fix clipboard integration with wsl
 - [ ] Setup utils dir with reused functions 
 - [ ] Make PR for nvim-lspconfig angularls configuration 
 - [ ] Add the following lsp:
