@@ -8,6 +8,7 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "Decodetalkers/csharpls-extended-lsp.nvim"
     },
     config = function()
       require('mason').setup {}
@@ -15,12 +16,22 @@ return {
       local mason_lspconfig = require('mason-lspconfig')
 
       mason_lspconfig.setup({
-        ensure_installed = { "lua_ls", "bicep", "csharp_ls", "ts_ls", "jsonls", "bashls", "marksman", "yamlls" }
+        ensure_installed = { "lua_ls", "bicep", "csharp_ls", "ts_ls", "jsonls", "bashls", "marksman", "yamlls", "texlab" }
       })
 
       mason_lspconfig.setup_handlers({
         function(server_name)
           lspconfig[server_name].setup {}
+        end,
+        ["csharp_ls"] = function()
+          local config = {
+            handlers = {
+              ["textDocument/definition"] = require('csharpls_extended').handler,
+              ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
+            },
+          }
+
+          lspconfig.csharp_ls.setup(config)
         end,
         ["angularls"] = function()
           local dynamic_node_module_dir = vim.fs.find(
@@ -37,18 +48,6 @@ return {
               new_config.cmd = cmd
             end,
           }
-        end,
-        ['bicep'] = function()
-          vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
-            pattern = { '*.bicep' },
-            callback = function()
-              vim.opt.ft = 'bicep'
-            end
-          })
-
-          local bicep_lsp_bin =
-          'C:\\Users\\gabriel.faucher\\AppData\\Local\\nvim-data\\mason\\packages\\bicep-lsp\\extension\\bicepLanguageServer\\Bicep.LangServer.dll'
-          lspconfig.bicep.setup { cmd = { 'dotnet', bicep_lsp_bin } }
         end,
       })
     end
@@ -67,6 +66,10 @@ return {
           vim.keymap.set('n', 'go', '<cmd>Lspsaga goto_type_definition<cr>', opts)
           vim.keymap.set('n', 'gr', '<cmd>Lspsaga rename<cr>', opts)
           vim.keymap.set('n', 'ca', '<cmd>Lspsaga code_action<cr>', opts)
+
+          -- Go to decompiled definition (C#)
+          vim.keymap.set('n', '<leader>gcd', "<cmd>Telescope csharpls_definition<cr>",
+            { desc = '[ ] Find existing buffers' })
         end,
       })
 

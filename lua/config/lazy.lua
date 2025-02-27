@@ -39,6 +39,11 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.opt.showmode = false
 
+vim.cmd("set tabstop=2 softtabstop=2 shiftwidth=2")
+vim.cmd("set expandtab")
+vim.cmd("set number ruler")
+vim.cmd("set autoindent smartindent")
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
